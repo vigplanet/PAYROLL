@@ -1,0 +1,113 @@
+<div class="block-header">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <h2>Bank Setting</h2>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard"><i class="fa fa-dashboard"></i></a></li>
+        <li class="breadcrumb-item">Payroll</li>
+        <li class="breadcrumb-item active">Bank Setting</li>
+      </ul>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="d-flex flex-row-reverse">
+        <div class="page_action">
+          <button type="button" class="btn btn-primary mr-1"><i class="fa fa-download"></i> Download report</button>
+          &nbsp;<button type="button" class="btn btn-secondary"><i class="fa fa-send"></i> Send report</button>
+        </div>
+        <div class="p-2 d-flex">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="header">
+        <h2>Bank Setting</h2>
+      </div>
+      <div class="body">
+        <form [formGroup]="BankSettingForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="row">
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Bank Name</label>
+              <input type="text" class="form-control" formControlName="bankName"
+                [ngClass]="{ 'is-invalid': submitted && f.bankName.errors }" required>
+              <div *ngIf="submitted && f.bankName.errors" class="invalid-feedback">
+                <div *ngIf="f.bankName.errors.required">Bank Name is required</div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Branch Name</label>
+              <input type="text" class="form-control" formControlName="branchName"
+                [ngClass]="{ 'is-invalid': submitted && f.branchName.errors }" required>
+              <div *ngIf="submitted && f.branchName.errors" class="invalid-feedback">
+                <div *ngIf="f.branchName.errors.required">Branch Name is required</div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Esi Above Value</label>
+              <input type="number" class="form-control" formControlName="esivalue" value="0"
+                [ngClass]="{ 'is-invalid': submitted && f.esivalue.errors }" required>
+              <div *ngIf="submitted && f.esivalue.errors" class="invalid-feedback">
+                <div *ngIf="f.esivalue.errors.required">Esi Value is required</div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Esi Charge %</label>
+              <input type="number" class="form-control" formControlName="esiPer" value="0"
+                [ngClass]="{ 'is-invalid': submitted && f.esiPer.errors }" required>
+              <div *ngIf="submitted && f.esiPer.errors" class="invalid-feedback">
+                <div *ngIf="f.esiPer.errors.required">Esi Charge % is required</div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary mr-1">Save</button>
+          &nbsp; <button class="btn btn-secondary" type="reset" (click)="onReset()">Reset</button>
+        </form>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="body table-responsive">
+            <table class="table mb-0">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Bank Name</th>
+                  <th scope="col">Branch Name</th>
+                  <th scope="col">Esi Value</th>
+                  <th scope="col">Esi %</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of BankSettingList; let i=index">
+                  <th scope="row" [textContent]="i+1"></th>
+                  <td [textContent]="data.bankName"></td>
+                  <td [textContent]="data.branchName"></td>
+                  <td [textContent]="data.esivalue"></td>
+                  <td [textContent]="data.esiPer"></td>
+                  <td>
+                    <span *ngIf="data.status==1; else InActive" class="label-custom label label-default">Active</span>
+                    <ng-template #InActive><span class="label-custom label label-default">InActive</span>
+                    </ng-template>
+                  </td>
+                  <td>
+                    <button type="button" href="javascript:void(0);" class="btn btn-sm btn-outline-success"
+                      (click)="EditBankSetting(data)"><i class="icon-pencil"></i></button>&nbsp;
+                    <button type="button" href="javascript:void(0);" class="btn btn-sm btn-outline-danger js-sweetalert"
+                      title="Delete" data-type="confirm"><i class="icon-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,249 @@
+<div class="block-header">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <h2>Employee Salary</h2>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard"><i class="fa fa-dashboard"></i></a></li>
+        <li class="breadcrumb-item">Payroll</li>
+        <li class="breadcrumb-item active">Employee Salary</li>
+      </ul>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="d-flex flex-row-reverse">
+        <div class="page_action">
+          <button type="button" class="btn btn-primary mr-1"><i class="fa fa-download"></i> Download report</button>
+          &nbsp;<button type="button" class="btn btn-secondary"><i class="fa fa-send"></i> Send report</button>
+        </div>
+        <div class="p-2 d-flex">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="header">
+        <h2>Employee Salary</h2>
+          <button type="button" class="pull-right btn btn-primary" (click)="AddSalaryIncrement()">Add Salary Increment</button>
+      </div>
+      <div class="body">
+        <form [formGroup]="EmployeeSalary" (ngSubmit)="onSubmit()" novalidate>
+          <div class="row clearfix">            
+            <div class="col-lg-3 col-md-12">
+              <label>Select Employee</label>
+                <select class="form-control" formControlName="empID" (ngModelChange)="EditData($event)">
+                  <option [ngValue]="undefined || 0" selected>---Select---</option>
+                  <option *ngFor="let List of EmpList" [textContent]="List.empName"
+                                [ngValue]="List.empId"></option>
+                </select>
+                <div *ngIf="submitted && f.empID.errors" class="invalid-feedback">
+                  <div *ngIf="f.empID.errors.required">Employee is required</div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Office Time Start</label>
+              <input type="time" class="form-control" formControlName="officetimeStart"
+              [ngClass]="{ 'is-invalid': submitted && f.officetimeStart.errors }" required>
+            <div *ngIf="submitted && f.officetimeStart.errors" class="invalid-feedback">
+              <div *ngIf="f.officetimeStart.errors.required">Office Time Start is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Office Time Day End</label>
+              <input type="time" class="form-control" formControlName="officetimeEnd"
+              [ngClass]="{ 'is-invalid': submitted && f.officetimeEnd.errors }" required>
+            <div *ngIf="submitted && f.officetimeEnd.errors" class="invalid-feedback">
+              <div *ngIf="f.officetimeEnd.errors.required">Office Time Day End is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Office Late Start Time</label>
+              <input type="time" class="form-control" formControlName="officelatetime"
+              [ngClass]="{ 'is-invalid': submitted && f.officelatetime.errors }" required>
+            <div *ngIf="submitted && f.officelatetime.errors" class="invalid-feedback">
+              <div *ngIf="f.officelatetime.errors.required">Office Late Start Time is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Total Monthly Salary</label>
+              <input type="number" class="form-control" formControlName="totalMonthlySalary"
+              [ngClass]="{ 'is-invalid': submitted && f.totalMonthlySalary.errors }" required>
+            <div *ngIf="submitted && f.totalMonthlySalary.errors" class="invalid-feedback">
+              <div *ngIf="f.totalMonthlySalary.errors.required">Total Monthly Salary is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Per Hours Salary</label>
+              <input type="number" class="form-control" formControlName="perHoursSalary"
+              [ngClass]="{ 'is-invalid': submitted && f.perHoursSalary.errors }" required>
+            <div *ngIf="submitted && f.perHoursSalary.errors" class="invalid-feedback">
+              <div *ngIf="f.perHoursSalary.errors.required">Per Hours Salary is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Total Working Hours</label>
+              <input type="number" class="form-control" formControlName="totalWorkingHours"
+              [ngClass]="{ 'is-invalid': submitted && f.totalWorkingHours.errors }" required>
+            <div *ngIf="submitted && f.totalWorkingHours.errors" class="invalid-feedback">
+              <div *ngIf="f.totalWorkingHours.errors.required">Total Working Hours is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Lunch Time Start</label>
+              <input type="time" class="form-control" formControlName="lunchtimeStart"
+              [ngClass]="{ 'is-invalid': submitted && f.lunchtimeStart.errors }" required>
+            <div *ngIf="submitted && f.lunchtimeStart.errors" class="invalid-feedback">
+              <div *ngIf="f.lunchtimeStart.errors.required">Lunch Time Start is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Lunch Time End</label>
+              <input type="time" class="form-control" formControlName="lunchtimeEnd"
+              [ngClass]="{ 'is-invalid': submitted && f.lunchtimeEnd.errors }" required>
+            <div *ngIf="submitted && f.lunchtimeEnd.errors" class="invalid-feedback">
+              <div *ngIf="f.lunchtimeEnd.errors.required">Lunch Time End is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Late Deduction Hours</label>
+              <input type="number" class="form-control" formControlName="lateDeductionHours"
+              [ngClass]="{ 'is-invalid': submitted && f.lateDeductionHours.errors }" required>
+            <div *ngIf="submitted && f.lateDeductionHours.errors" class="invalid-feedback">
+              <div *ngIf="f.lateDeductionHours.errors.required">Late Deduction Hours is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Sunday Full Day Hours</label>
+              <input type="number" class="form-control" formControlName="sundayFilldayHours"
+              [ngClass]="{ 'is-invalid': submitted && f.sundayFilldayHours.errors }" required>
+            <div *ngIf="submitted && f.sundayFilldayHours.errors" class="invalid-feedback">
+              <div *ngIf="f.sundayFilldayHours.errors.required">Sunday Full Day Hours is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Sunday Full Day Salary</label>
+              <input type="number" class="form-control" formControlName="sundayFilldaySalary"
+              [ngClass]="{ 'is-invalid': submitted && f.sundayFilldaySalary.errors }" required>
+            <div *ngIf="submitted && f.sundayFilldaySalary.errors" class="invalid-feedback">
+              <div *ngIf="f.sundayFilldaySalary.errors.required">Sunday Full Day Salary is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Total Lunch Hours</label>
+              <input type="number" class="form-control" formControlName="totalLunchHours"
+              [ngClass]="{ 'is-invalid': submitted && f.totalLunchHours.errors }" required>
+            <div *ngIf="submitted && f.totalLunchHours.errors" class="invalid-feedback">
+              <div *ngIf="f.totalLunchHours.errors.required">Total Lunch Hours is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Extra Amount Time Breakfast</label>
+              <input type="number" class="form-control" formControlName="extraAmountBefore_after_time"
+              [ngClass]="{ 'is-invalid': submitted && f.extraAmountBefore_after_time.errors }" required>
+            <div *ngIf="submitted && f.extraAmountBefore_after_time.errors" class="invalid-feedback">
+              <div *ngIf="f.extraAmountBefore_after_time.errors.required">Extra Amount Time Breakfast is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Bonus</label>
+              <input type="number" class="form-control" formControlName="bonusMonth"
+              [ngClass]="{ 'is-invalid': submitted && f.bonusMonth.errors }" required>
+            <div *ngIf="submitted && f.bonusMonth.errors" class="invalid-feedback">
+              <div *ngIf="f.bonusMonth.errors.required">Bonus is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Bonus Leave</label>
+              <input type="number" class="form-control" formControlName="ded_BonusLV"
+              [ngClass]="{ 'is-invalid': submitted && f.ded_BonusLV.errors }" required>
+            <div *ngIf="submitted && f.ded_BonusLV.errors" class="invalid-feedback">
+              <div *ngIf="f.ded_BonusLV.errors.required">Bonus Leave is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Bank Salary</label>
+              <input type="number" class="form-control" formControlName="banksalary"
+              [ngClass]="{ 'is-invalid': submitted && f.text_ibanksalarynput.errors }" required>
+            <div *ngIf="submitted && f.banksalary.errors" class="invalid-feedback">
+              <div *ngIf="f.banksalary.errors.required">Code is required</div>
+            </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label class="fancy-checkbox">
+                <input type="checkbox" class="form-check-input" />
+                <!-- [ngClass]="{ 'is-invalid': submitted && f.test_checkbox.errors }" /> -->
+                <span>Smart Search</span>
+              </label>
+            </div>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Save</button>
+          &nbsp; <button class="btn btn-secondary" type="reset" (click)="onReset()">Reset</button>
+        </form>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="body table-responsive">
+            <table class="table mb-0">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Emp RegNo.</th>
+                  <th scope="col">Emp Name</th>
+                  <th scope="col">Mobile No.</th>
+                  <th scope="col">Office Time Start</th>
+                  <th scope="col">Office Time End</th>
+                  <th scope="col">Total Working Hours</th>
+                  <th scope="col">Total Monthly Salary</th>
+                  <th scope="col">Per Hours Salary</th>
+                  <th scope="col">Late Deduction Hours</th>
+                  <th scope="col">Lunch Time Start</th>
+                  <th scope="col">Lunch Time End</th>
+                  <th scope="col">Total Lunch Hours</th>
+                  <th scope="col">Sunday Full Day Hours</th>
+                  <th scope="col">Sunday Full Day Salary</th>
+                  <th scope="col">Extra Amount Before After Time</th>
+                  <th scope="col">Bank Salary</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of EditEmpSalary; let i=index">
+                  <th scope="row" [textContent]="i+1"></th>
+                  <td>72</td>
+                  <td [textContent]="item.empName"></td>
+                  <td [textContent]="item.mobileNo"></td>
+                  <td [textContent]="item.officetimeStart"></td>
+                  <td [textContent]="item.officetimeEnd"></td>
+                  <td [textContent]="item.totalWorkingHours"></td>
+                  <td [textContent]="item.totalMonthlySalary"></td>
+                  <td [textContent]="item.perHoursSalary"></td>
+                  <td [textContent]="item.lateDeductionHours"></td>
+                  <td [textContent]="item.lunchtimeStart"></td>
+                  <td [textContent]="item.lunchtimeEnd"></td>
+                  <td [textContent]="item.totalLunchHours"></td>
+                  <td [textContent]="item.sundayFilldayHours"></td>
+                  <td [textContent]="item.sundayFilldaySalary"></td>
+                  <td [textContent]="item.extraAmountBefore_after_time"></td>
+                  <td [textContent]="item.banksalary"></td>
+                  <td><span *ngIf="item.status=='1'; else InActive"
+                    class="label-custom label label-default">Active</span>
+                  <ng-template #InActive><span class="label-custom label label-default">InActive</span>
+                  </ng-template></td>
+                  <td>
+                    <!-- <button type="button" href="javascript:void(0);" class="btn btn-sm btn-outline-success"><i class="icon-pencil"></i></button>&nbsp; -->
+                    <button type="button" href="javascript:void(0);" class="btn btn-sm btn-outline-danger js-sweetalert" title="Delete" data-type="confirm"><i class="icon-trash"></i></button>
+                </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

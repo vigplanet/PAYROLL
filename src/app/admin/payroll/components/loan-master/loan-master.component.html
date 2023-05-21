@@ -1,0 +1,113 @@
+<div class="block-header">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <h2>Loan Master</h2>
+      <ul class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/dashboard"><i class="fa fa-dashboard"></i></a></li>
+        <li class="breadcrumb-item">Payroll</li>
+        <li class="breadcrumb-item active">Loan Master</li>
+      </ul>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      <div class="d-flex flex-row-reverse">
+        <div class="page_action">
+          <button type="button" class="btn btn-primary mr-1"><i class="fa fa-download"></i> Download report</button>
+          &nbsp;<button type="button" class="btn btn-secondary"><i class="fa fa-send"></i> Send report</button>
+        </div>
+        <div class="p-2 d-flex">
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row clearfix">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="header">
+        <h2>Loan Master</h2>
+      </div>
+      <div class="body">
+        <form [formGroup]="loanForm" (ngSubmit)="onSubmit()" novalidate>
+          <div class="row clearfix">
+            <div class="col-lg-3 col-md-12">
+              <label>Select Employee</label>
+              <select class="form-control" formControlName="empID">
+                <option [ngValue]="undefined || 0" selected>---Select---</option>
+                <option *ngFor="let List of EmpList" [textContent]="List.empName" [ngValue]="List.empId"></option>
+              </select>
+              <div *ngIf="submitted && f.empID.errors" class="invalid-feedback">
+                <div *ngIf="f.empID.errors.required">Employee is required</div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Loan Date</label>
+              <input type="date" class="form-control" formControlName="loanDate">
+              <!-- [ngClass]="{ 'is-invalid': submitted && f.empID.errors }" required>
+            <div *ngIf="submitted && f.empID.errors" class="invalid-feedback">
+              <div *ngIf="f.empID.errors.required">Employee is required</div>
+            </div> -->
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Loan Amount</label>
+              <input type="number" class="form-control" formControlName="loanAmt"
+                [ngClass]="{ 'is-invalid': submitted && f.loanAmt.errors }" required>
+              <div *ngIf="submitted && f.loanAmt.errors" class="invalid-feedback">
+                <div *ngIf="f.loanAmt.errors.required">Loan Amount is required</div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-3 form-group">
+              <label>Emi Amount</label>
+              <input type="number" class="form-control" formControlName="emiAmt"
+                [ngClass]="{ 'is-invalid': submitted && f.emiAmt.errors }" required>
+              <div *ngIf="submitted && f.emiAmt.errors" class="invalid-feedback">
+                <div *ngIf="f.emiAmt.errors.required">EMI Amount is required</div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <button type="submit" class="btn btn-primary">Save</button>
+          &nbsp; <button class="btn btn-secondary" type="reset" (click)="onReset()">Reset</button>
+        </form>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="card">
+          <div class="body table-responsive">
+            <table class="table mb-0">
+              <thead class="thead-light">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Emp RegNo.</th>
+                  <th scope="col">Emp Name</th>
+                  <th scope="col">Loan Date</th>
+                  <th scope="col">Loan Amount</th>
+                  <th scope="col">EMI Amount</th>
+                  <th scope="col">Loan Status</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of LoanList; let i=index">
+                  <th scope="row" [textContent]="i+1"></th>
+                  <td [textContent]="data.empRegNo"></td>
+                  <td [textContent]="data.empName"></td>
+                  <td [textContent]="data.loanDate"></td>
+                  <td [textContent]="data.loanAmt"></td>
+                  <td [textContent]="data.emiAmt"></td>
+                  <td><span class="badge badge-success" [textContent]="data.loanStatus"></span></td>
+                  <td>
+                    <button type="button" href="javascript:void(0);" class="btn btn-sm btn-outline-success" (click)="EditData(data)"><i
+                        class="icon-pencil"></i></button>&nbsp;
+                    <button type="button" href="javascript:void(0);" class="btn btn-sm btn-outline-danger js-sweetalert"
+                      title="Delete" data-type="confirm"><i class="icon-trash"></i></button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
